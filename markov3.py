@@ -27,63 +27,46 @@ def make_chains(corpus, num):
     val = corpus.pop(0) #popped off first item of corpus (after key)
     chains[key] = [val] #created first keypair
     
-    while corpus:
-        key = (key[1:],) + (val,)
-        print key
-        val = [corpus.pop(0)]
-        chains[key] = [val]
+    while corpus !=[]:
+        key2 = key[1:] + (val,)
+        new_val = corpus.pop(0)
+        chains.setdefault(key2, []).append(new_val)
+        key = key2
+        val = new_val
 
-    print chains
-
-
-
+    return chains
 
 
+#ake_chains("this is a bear this is a fish this is a squid this is a mouse", 4)
 
-        #key[1:]+tuple(corpus.pop(0))
-    
+def make_text(chains):
+    """Takes a dictionary of markov chains and returns random text
+    based off an original text."""
 
+    words = []
+    start = random.choice(chains.keys())
 
-   
-      
+    for word in tuple:
+        words.append(word)
 
+    next_word = random.choice(chains[start])
+    words.append(next_word)
 
-    # create second key from first key
-    # pop off value each time
+    # test to see if the last item in words ends with a period
+    final_word = words[-1]
+    end = final_word.endswith(".") 
 
-make_chains("this is a bear this is a fish this is a squid this is a mouse", 3)
-#     return chains
+    ########START HERE###############
+    while (end == False) and (len(words) < 30):
+        new_tuple = (words[-3], words[-2], words[-1])
+        print new_tuple
+        next_word = random.choice(chains[new_tuple])
+        words.append(next_word)
+        final_word = words[-1] # this wasn't working b/c we weren't updating this
+        end = final_word.endswith(".") 
 
-# def make_text(chains):
-#     """Takes a dictionary of markov chains and returns random text
-#     based off an original text."""
-
-#     words = []
-#     start = random.choice(chains.keys())
-
-#     first_word = start[0]
-#     second_word = start[1]
-#     third_word = start[2]
-#     fourth_word = random.choice(chains[start])
-
-#     words.append(first_word)
-#     words.append(second_word)
-#     words.append(third_word)
-#     words.append(fourth_word)
-
-#     final_word = words[-1]
-#     end = final_word.endswith(".") 
-
-#     while (end == False) and (len(words) < 30):
-#         new_tuple = (words[-3], words[-2], words[-1])
-#         print new_tuple
-#         next_word = random.choice(chains[new_tuple])
-#         words.append(next_word)
-#         final_word = words[-1] # this wasn't working b/c we weren't updating this
-#         end = final_word.endswith(".") 
-
-#     words[0] = words[0].capitalize()
-#     return ' '.join(words)
+    words[0] = words[0].capitalize()
+    return ' '.join(words)
 
 # def tweet(input):
 #     if len(input) <= 140:
