@@ -1,4 +1,5 @@
 import sqlite3
+import shlex
 
 DB = None
 CONN = None
@@ -25,6 +26,15 @@ def make_new_student(first_name, last_name, github):
     CONN.commit()
     print "Successfully added student: %s %s" % (first_name, last_name)
 
+def add_project(title, description, max_grade):
+    try:
+        query = """INSERT INTO Projects values (?, ?, ?)"""
+        DB.execute(query, (title, description, max_grade))
+        CONN.commit()
+        print "Successfully added project %s with maximum grade %s" % (title, max_grade)
+    except:
+        print "There was a problem adding the project to the database."    
+
 def find_project_by_title(title):
     try:
         query = """SELECT title, description, max_grade FROM Projects WHERE title = ?"""
@@ -37,8 +47,6 @@ def find_project_by_title(title):
     except TypeError:
         print "Error: There is no project by that name."
 
-def add_project(title, description, max_grade):
-    pass
 
 def find_grade(github, project_title):
     try:
@@ -67,8 +75,22 @@ def assign_grade(student_github, project_title, grade):
     except:
         print "There was a problem adding the grade to the database."
 
-# def show_grades(student):
-#     pass
+def show_grades_by_student(github):
+    try:
+        query = """SELECT Grades.project_title, Grades.grade
+                    FROM Grades
+                    INNER JOIN Students
+                    ON Grades.student_github = Students.github
+                    WHERE Students.github = ?"""
+        DB.execute(query, (github,))
+        rows = DB.fetchall()
+        print """\
+        Grades for student %s:""" % github
+        for row in rows:
+            print """\
+            Project title: %s. Grade: %s.""" % (row[0], row[1])
+    except:
+         print "There is no student in the database with github handle %s." % github
 
 
 def main():
@@ -76,10 +98,9 @@ def main():
     command = None
     while command != "quit":
         input_string = raw_input("HBA Database> ")
-        tokens = input_string.split()
+        tokens = shlex.split(input_string)
         command = tokens[0]
         args = tokens[1:]
-
         if command == "student":
             get_student_by_github(*args) 
         elif command == "new_student":
