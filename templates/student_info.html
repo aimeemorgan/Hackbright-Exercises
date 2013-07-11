@@ -3,11 +3,8 @@
 	<h1>Student: {{last_name}}, {{first_name}}</h1>
 	<h2>Grades</h2>
 	{% for project in rows %}
-		<p>Project name: {{project[2]}}</p>
+		<p><a href="./project?project_name={{project[2]}}">Project name: {{project[2]}}</a></p>
 		<p>Grade: {{project[3]}}</p>
 	{%endfor%}
-
-	<p>This student has shown extreme recalcitrance and has generally proved to be unreliable.</p>
-	<p>It is my recommendation that they be put on double-secret probation for the remainder of the course.</p>
 </body>
 </html>

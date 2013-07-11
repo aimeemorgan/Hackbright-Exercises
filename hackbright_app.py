@@ -8,6 +8,7 @@ import inspect
 def get_num_args(fn):
     return len(inspect.getargspec(fn).args)
 
+
 def get_student_by_github(github):
     query = """SELECT first_name, last_name, github FROM Students WHERE github = ?"""
     DB.execute(query, (github,))
@@ -20,10 +21,10 @@ def connect_to_db():
     DB = CONN.cursor()
 
 def make_new_student(first_name, last_name, github):
-    query = """INSERT into Students values (?,?,?)"""%first_name
+    query = """INSERT into Students values (?,?,?)"""
     DB.execute(query, (first_name, last_name, github))
     CONN.commit()
-    print "Successfully added student: %s %s"%(first_name, last_name)
+    return "Successfully added student: %s %s"%(first_name, last_name)
 
 def get_project_by_title(project_title):
     query = """SELECT title, description FROM Projects WHERE title = ?"""
@@ -35,7 +36,7 @@ def make_new_project(title, description, max_grade):
     query = """INSERT into Projects values (?, ?, ?)"""
     DB.execute(query, (title, description, max_grade))
     CONN.commit()
-    print "Successfully added project: %s"%(title)
+    return "Successfully added project: %s"%(title)
 
 def get_grade_by_project(title, github):
     print 'test'
@@ -51,7 +52,7 @@ def make_grade_for_student(github, project_title, grade):
     query = """INSERT into Grades VALUES(?,?,?)"""
     DB.execute(query, (github, project_title, grade))
     CONN.commit
-    print "Successfully added grade for %s on project: %s"%(github, project_title)
+    return "Successfully added grade for %s on project: %s"%(github, project_title)
 
 def show_grades(github):
     query = """SELECT first_name, last_name, project_title, grade FROM Students 
@@ -63,7 +64,7 @@ def show_grades(github):
     return rows
 
 def show_grades_by_project(project_title):
-    query = """SELECT first_name, last_name, project_title, grade FROM Students, Grades WHERE project_title = ?"""
+    query = """SELECT first_name, last_name, github, project_title, grade FROM Students, Grades WHERE project_title = ?"""
     DB.execute(query, (project_title,))
     rows = DB.fetchall()
     return rows
