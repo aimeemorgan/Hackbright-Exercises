@@ -4,7 +4,10 @@ import hackbright_app
 app = Flask(__name__)
 
 @app.route("/")
+def main_page():
+    return render_template("index.html")
 
+@app.route("/find_student")
 def get_github():
     return render_template("get_github.html")
 
@@ -15,7 +18,6 @@ def show_project_grades():
     rows = hackbright_app.show_grades_by_project(project_name)
     html = render_template("project_info.html", rows = rows,
                                                 project = project_name)
-    print project_name, rows, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
     return html
 
 @app.route("/student")
@@ -71,6 +73,7 @@ def grade_added():
     success_message = hackbright_app.make_grade_for_student(github, project, grade)
     html = render_template("grade_added.html", message = success_message)
     return html
+
 
 
 if __name__ == "__main__":
