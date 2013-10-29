@@ -1,0 +1,10 @@
+<html>
+<body>
+	<h1>Student: {{last_name}}, {{first_name}}</h1>
+	<h2>Grades</h2>
+	{% for project in rows %}
+		<p><a href="./project?project_name={{project[2]}}">Project name: {{project[2]}}</a></p>
+		<p>Grade: {{project[3]}}</p>
+	{%endfor%}
+</body>
+</html>
