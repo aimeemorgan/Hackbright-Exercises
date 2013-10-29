@@ -1,0 +1,66 @@
+<html>
+<header>
+	<style>
+
+	#pbjelly {
+		border: 10px solid red;
+		display: block;
+    	margin-left: auto;
+    	margin-right: auto 
+
+}
+
+	body {
+		background: #79CDCD;
+	}
+
+	#header {
+		text-align: center;
+		font-family: Courier;
+		background-color: yellow; 
+		color: blue;
+	}
+
+	#login {
+		text-align: center;
+	}
+
+	.zee_links {
+		margin-left:auto;
+		margin-right:auto;
+		font-size: 20px;
+		font-family: Courier;
+	}
+
+	.zee_links:link {
+		text-decoration: underline;
+	}
+	.zee_links:hover {
+		background-color: yellow;
+	}
+
+	div {
+		text-align: center;
+	}
+
+	#user {
+		text-align: center;
+		font-size: 25px;
+		font-family: Courier;
+		font-weight: bold;
+		color: #99FF00;
+		background-color: #9B30FF;
+	}
+	</style>
+</header>
+<body>
+	<h1 id="header"> Welcome to UpVote </h1>
+
+	<img id="pbjelly" src="http://i.imgur.com/gp7mrgR.gif" />
+	<h2 id="user"> Welcome {{user.email}}</h2>
+
+	<div><p><a class="zee_links" href="/your_posts?email={{user.email}}"> Go to yo posts </a></p>
+	<p><a class="zee_links" href="/all_posts"> See all zee posts </a></p>
+	<p><a class="zee_links" href="/create_post"> Create the new post </a></p></div>
+	</form>
+</body>
